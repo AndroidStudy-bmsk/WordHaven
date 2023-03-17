@@ -1,4 +1,4 @@
-## Button을 ImageView로 구성한 이유
+## 1. Button을 ImageView로 구성한 이유
 
 #### 만일 Button을 `ImageButton`으로 구성할 경우 다음과 같습니다.
 
@@ -13,10 +13,9 @@
         app:layout_constraintEnd_toEndOf="parent" />
 ```
 
-![image.png](assets/image.png)
+![image](assets/image.png)
 
 - `ImageButton`의 경우 자동으로 배경(Background)이 생성되며 해당 배경을 지워주는 작업을 추가로 해야 합니다.
-
 
 #### 만일 `ImageView`로 구성할 경우 다음과 같습니다.
 
@@ -31,7 +30,7 @@
         app:layout_constraintEnd_toEndOf="parent" />
 ```
 
-![image.png](assets/image2.png)
+![image2](assets/image2.png)
 
 - `ImageView`의 경우 배경이 추가되지 않습니다.
 
@@ -43,10 +42,15 @@
 
 ---
 
-
-
 ### 추가: `Padding`
 
 또한, Button을 구성할 때는 `width`와 `height`를 각각 `48dp`로 설정해야 의도적인 클릭이 가능하다는 구글의 권장 최소 사이즈가 있습니다.
 
 해당 이미지의 크기가 `24dp`이기 때문에, 클릭 시 불편함이 없도록 최소 `12dp`의 `padding`을 주는 것이 적절해 보입니다.
+
+## 2. RecyclerView
+
+![image3](assets/image3.png)
+
+### Adapter 주요 메서드
+![image4](assets/image4.png)
