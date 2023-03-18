@@ -1,5 +1,6 @@
 package org.bmsk.wordhaven
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Adapter
@@ -16,13 +17,11 @@ class WordBookActivity : AppCompatActivity(), WordAdapter.ItemClickListener {
     private lateinit var dummyList: MutableList<Word>
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityWordBookBinding.inflate(layoutInflater)
-
-        initDummyData()
-        initView()
-
         setContentView(binding.root)
+
+        initDummyData() // View를 구성하기 전 Data를 먼저 초기화합니다.
+        initView()
     }
 
     private fun initDummyData() {
@@ -34,6 +33,17 @@ class WordBookActivity : AppCompatActivity(), WordAdapter.ItemClickListener {
     }
 
     private fun initView() {
+        initRecyclerView()
+        initButton()
+    }
+
+    private fun initButton() {
+        binding.btnAdd.setOnClickListener {
+            startActivity(Intent(this, AddWordActivity::class.java))
+        }
+    }
+
+    private fun initRecyclerView() {
         wordAdapter = WordAdapter(dummyList, this)
         binding.rvWordList.apply {
             adapter = wordAdapter
