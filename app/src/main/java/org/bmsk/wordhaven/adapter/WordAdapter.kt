@@ -8,7 +8,7 @@ import org.bmsk.wordhaven.data.model.Word
 import org.bmsk.wordhaven.databinding.ItemWordBinding
 
 class WordAdapter(
-    private val list: MutableList<Word>,
+    val wordList: MutableList<Word>,
     private val itemClickListener: ItemClickListener? = null,
 ) :
     RecyclerView.Adapter<WordAdapter.WordViewHolder>() {
@@ -21,11 +21,11 @@ class WordAdapter(
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return wordList.size
     }
 
     override fun onBindViewHolder(holder: WordViewHolder, position: Int) {
-        val word = list[position]
+        val word = wordList[position]
         holder.bind(word)
         holder.itemView.setOnClickListener { itemClickListener?.onClick(word) }
     }

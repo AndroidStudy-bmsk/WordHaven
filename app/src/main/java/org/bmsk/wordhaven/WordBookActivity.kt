@@ -5,9 +5,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Adapter
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.bmsk.wordhaven.adapter.WordAdapter
+import org.bmsk.wordhaven.data.local.AppDatabase
 import org.bmsk.wordhaven.data.model.Word
 import org.bmsk.wordhaven.databinding.ActivityWordBookBinding
 
@@ -15,6 +17,15 @@ class WordBookActivity : AppCompatActivity(), WordAdapter.ItemClickListener {
     private lateinit var binding: ActivityWordBookBinding
     private lateinit var wordAdapter: WordAdapter
     private lateinit var dummyList: MutableList<Word>
+    private val updateAddedWordResult =
+        registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            val isUpdated = result.data?.getBooleanExtra("isUpdated", false) ?: false
+
+            if(result.resultCode == RESULT_OK && isUpdated) {
+                updateAddWord()
+            }
+        }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityWordBookBinding.inflate(layoutInflater)
@@ -39,7 +50,9 @@ class WordBookActivity : AppCompatActivity(), WordAdapter.ItemClickListener {
 
     private fun initButton() {
         binding.btnAdd.setOnClickListener {
-            startActivity(Intent(this, AddWordActivity::class.java))
+            Intent(this, AddWordActivity::class.java).let {
+                updateAddedWordResult.launch(it)
+            }
         }
     }
 
@@ -47,10 +60,29 @@ class WordBookActivity : AppCompatActivity(), WordAdapter.ItemClickListener {
         wordAdapter = WordAdapter(mutableListOf(), this)
         binding.rvWordList.apply {
             adapter = wordAdapter
-            layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
-            val dividerItemDecoration = DividerItemDecoration(applicationContext, LinearLayoutManager.VERTICAL)
+            layoutManager =
+                LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
+            val dividerItemDecoration =
+                DividerItemDecoration(applicationContext, LinearLayoutManager.VERTICAL)
             addItemDecoration(dividerItemDecoration)
         }
+
+        Thread {
+            val wordList = AppDatabase.getInstance(this)?.wordDao()?.getAll() ?: emptyList()
+            wordAdapter.wordList.addAll(wordList)
+            runOnUiThread {
+                wordAdapter.notifyDataSetChanged()  // 이 부분을 좀 더 정교하게 다듬게 된다면...
+            }
+        }.start()
+    }
+
+    private fun updateAddWord() {
+        Thread {
+            AppDatabase.getInstance(this)?.wordDao()?.getLatestWord()?.let {
+                wordAdapter.wordList.add(0, it)
+                runOnUiThread { wordAdapter.notifyDataSetChanged() }
+            }
+        }.start()
     }
 
     override fun onClick(word: Word) {

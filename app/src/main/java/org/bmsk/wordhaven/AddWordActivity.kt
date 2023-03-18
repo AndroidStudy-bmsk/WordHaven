@@ -1,5 +1,6 @@
 package org.bmsk.wordhaven
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
@@ -58,6 +59,9 @@ class AddWordActivity : AppCompatActivity() {
             runOnUiThread {
                 Toast.makeText(this, "저장을 완료했습니다", Toast.LENGTH_SHORT).show()
             }
+
+            val intent = Intent().putExtra("isUpdated", true)
+            setResult(RESULT_OK, intent)
             finish()
         }.start()
     }
