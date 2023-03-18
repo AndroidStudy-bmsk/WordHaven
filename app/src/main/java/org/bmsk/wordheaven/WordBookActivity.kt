@@ -16,11 +16,12 @@ class WordBookActivity : AppCompatActivity(), WordAdapter.ItemClickListener {
     private lateinit var binding: ActivityWordBookBinding
     private lateinit var wordAdapter: WordAdapter
     private lateinit var dummyList: MutableList<Word>
+    private var selectedWord: Word? = null
     private val updateAddedWordResult =
         registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
             val isUpdated = result.data?.getBooleanExtra("isUpdated", false) ?: false
 
-            if(result.resultCode == RESULT_OK && isUpdated) {
+            if (result.resultCode == RESULT_OK && isUpdated) {
                 updateAddWord()
             }
         }
@@ -44,14 +45,25 @@ class WordBookActivity : AppCompatActivity(), WordAdapter.ItemClickListener {
 
     private fun initView() {
         initRecyclerView()
-        initButton()
+        initButtons()
     }
 
-    private fun initButton() {
+    private fun initButtons() {
+        initAddButton()
+        initDeleteButton()
+    }
+
+    private fun initAddButton() {
         binding.btnAdd.setOnClickListener {
             Intent(this, AddWordActivity::class.java).let {
                 updateAddedWordResult.launch(it)
             }
+        }
+    }
+
+    private fun initDeleteButton() {
+        binding.ivDelete.setOnClickListener {
+            delete()
         }
     }
 
@@ -84,7 +96,26 @@ class WordBookActivity : AppCompatActivity(), WordAdapter.ItemClickListener {
         }.start()
     }
 
+    private fun delete() {
+        if(selectedWord == null) return
+
+        Thread {
+            selectedWord?.let { word ->
+                AppDatabase.getInstance(this)?.wordDao()?.delete(word)
+                runOnUiThread {
+                    wordAdapter.wordList.remove(word)
+                    wordAdapter.notifyDataSetChanged()
+                    binding.tvWord.text = ""
+                    binding.tvWordMean.text = ""
+                    Toast.makeText(this, "삭제되었습니다", Toast.LENGTH_SHORT).show()
+                }
+            }
+        }.start()
+    }
+
     override fun onClick(word: Word) {
-        Toast.makeText(this, "${word.text} 가 클릭 됐습니다", Toast.LENGTH_SHORT).show()
+        selectedWord = word
+        binding.tvWord.text = word.text
+        binding.tvWordMean.text = word.mean
     }
 }
