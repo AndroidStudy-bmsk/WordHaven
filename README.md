@@ -54,3 +54,9 @@
 
 ### Adapter 주요 메서드
 ![image4](assets/image4.png)
+
+## 3. registerForActivityResult
+
+![image5](assets/image5.png)
+
+`ActivityResultContract`를 통해 `ActivityResultCallback`을 콜백으로 받을 수 있습니다.
