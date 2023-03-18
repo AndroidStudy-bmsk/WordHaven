@@ -2,7 +2,10 @@ package org.bmsk.wordhaven
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.Toast
 import com.google.android.material.chip.Chip
+import org.bmsk.wordhaven.data.local.AppDatabase
+import org.bmsk.wordhaven.data.model.Word
 import org.bmsk.wordhaven.databinding.ActivityAddWordBinding
 
 class AddWordActivity : AppCompatActivity() {
@@ -18,6 +21,7 @@ class AddWordActivity : AppCompatActivity() {
 
     private fun initView() {
         initChipGroup()
+        initAddButton()
     }
 
     private fun initChipGroup() {
@@ -35,5 +39,26 @@ class AddWordActivity : AppCompatActivity() {
             isCheckable = true
             isClickable = true
         }
+    }
+
+    private fun initAddButton() {
+        binding.btnAdd.setOnClickListener {
+            add()
+        }
+    }
+
+    private fun add() {
+        val text = binding.tietTextInputWord.text.toString()
+        val mean = binding.tietTextInputMean.text.toString()
+        val type = findViewById<Chip>(binding.cgTypes.checkedChipId)?.text?.toString() ?: "no type"
+        val word = Word(text, mean, type)
+
+        Thread {
+            AppDatabase.getInstance(this)?.wordDao()?.insert(word)
+            runOnUiThread {
+                Toast.makeText(this, "저장을 완료했습니다", Toast.LENGTH_SHORT).show()
+            }
+            finish()
+        }.start()
     }
 }

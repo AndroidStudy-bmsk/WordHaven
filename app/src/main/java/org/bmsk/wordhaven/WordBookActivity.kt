@@ -20,7 +20,7 @@ class WordBookActivity : AppCompatActivity(), WordAdapter.ItemClickListener {
         binding = ActivityWordBookBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        initDummyData() // View를 구성하기 전 Data를 먼저 초기화합니다.
+        // initDummyData() // For Test: View를 구성하기 전 Data를 먼저 초기화합니다.
         initView()
     }
 
@@ -44,7 +44,7 @@ class WordBookActivity : AppCompatActivity(), WordAdapter.ItemClickListener {
     }
 
     private fun initRecyclerView() {
-        wordAdapter = WordAdapter(dummyList, this)
+        wordAdapter = WordAdapter(mutableListOf(), this)
         binding.rvWordList.apply {
             adapter = wordAdapter
             layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
