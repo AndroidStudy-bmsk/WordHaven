@@ -1,4 +1,4 @@
-package org.bmsk.wordhaven
+package org.bmsk.wordheaven
 
 import org.junit.Test
 

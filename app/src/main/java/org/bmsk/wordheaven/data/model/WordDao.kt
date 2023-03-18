@@ -1,4 +1,4 @@
-package org.bmsk.wordhaven.data.model
+package org.bmsk.wordheaven.data.model
 
 import androidx.room.Dao
 import androidx.room.Delete

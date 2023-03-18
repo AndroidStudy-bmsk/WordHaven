@@ -1,11 +1,11 @@
-package org.bmsk.wordhaven.data.local
+package org.bmsk.wordheaven.data.local
 
 import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
-import org.bmsk.wordhaven.data.model.Word
-import org.bmsk.wordhaven.data.model.WordDao
+import org.bmsk.wordheaven.data.model.Word
+import org.bmsk.wordheaven.data.model.WordDao
 
 @Database(entities = [Word::class], version = 1)
 abstract class AppDatabase : RoomDatabase() {

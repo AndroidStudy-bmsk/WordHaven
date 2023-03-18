@@ -1,4 +1,4 @@
-package org.bmsk.wordhaven.data.model
+package org.bmsk.wordheaven.data.model
 
 import androidx.room.Entity
 import androidx.room.PrimaryKey

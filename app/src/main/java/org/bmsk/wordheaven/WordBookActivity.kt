@@ -1,17 +1,16 @@
-package org.bmsk.wordhaven
+package org.bmsk.wordheaven
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Adapter
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import org.bmsk.wordhaven.adapter.WordAdapter
-import org.bmsk.wordhaven.data.local.AppDatabase
-import org.bmsk.wordhaven.data.model.Word
-import org.bmsk.wordhaven.databinding.ActivityWordBookBinding
+import org.bmsk.wordheaven.adapter.WordAdapter
+import org.bmsk.wordheaven.data.local.AppDatabase
+import org.bmsk.wordheaven.data.model.Word
+import org.bmsk.wordheaven.databinding.ActivityWordBookBinding
 
 class WordBookActivity : AppCompatActivity(), WordAdapter.ItemClickListener {
     private lateinit var binding: ActivityWordBookBinding

@@ -1,11 +1,11 @@
-package org.bmsk.wordhaven.adapter
+package org.bmsk.wordheaven.adapter
 
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import org.bmsk.wordhaven.data.model.Word
-import org.bmsk.wordhaven.databinding.ItemWordBinding
+import org.bmsk.wordheaven.data.model.Word
+import org.bmsk.wordheaven.databinding.ItemWordBinding
 
 class WordAdapter(
     val wordList: MutableList<Word>,

@@ -6,11 +6,11 @@ plugins {
 }
 
 android {
-    namespace 'org.bmsk.wordhaven'
+    namespace 'org.bmsk.wordheaven'
     compileSdk 33
 
     defaultConfig {
-        applicationId "org.bmsk.wordhaven"
+        applicationId "org.bmsk.wordheaven"
         minSdk 28
         targetSdk 33
         versionCode 1

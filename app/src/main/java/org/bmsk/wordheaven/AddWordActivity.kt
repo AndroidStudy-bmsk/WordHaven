@@ -1,13 +1,13 @@
-package org.bmsk.wordhaven
+package org.bmsk.wordheaven
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Toast
 import com.google.android.material.chip.Chip
-import org.bmsk.wordhaven.data.local.AppDatabase
-import org.bmsk.wordhaven.data.model.Word
-import org.bmsk.wordhaven.databinding.ActivityAddWordBinding
+import org.bmsk.wordheaven.data.local.AppDatabase
+import org.bmsk.wordheaven.data.model.Word
+import org.bmsk.wordheaven.databinding.ActivityAddWordBinding
 
 class AddWordActivity : AppCompatActivity() {
     private lateinit var binding: ActivityAddWordBinding
