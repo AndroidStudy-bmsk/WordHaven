@@ -7,7 +7,10 @@ import androidx.recyclerview.widget.RecyclerView
 import org.bmsk.wordhaven.data.model.Word
 import org.bmsk.wordhaven.databinding.ItemWordBinding
 
-class WordAdapter(private val list: MutableList<Word>) :
+class WordAdapter(
+    private val list: MutableList<Word>,
+    private val itemClickListener: ItemClickListener? = null,
+) :
     RecyclerView.Adapter<WordAdapter.WordViewHolder>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): WordViewHolder {
@@ -22,15 +25,23 @@ class WordAdapter(private val list: MutableList<Word>) :
     }
 
     override fun onBindViewHolder(holder: WordViewHolder, position: Int) {
-        holder.binding.apply {
-            val word = list[position]
-            tvWord.text = word.text
-            tvMean.text = word.mean
-            chipWordType.text = word.type
+        val word = list[position]
+        holder.bind(word)
+        holder.itemView.setOnClickListener { itemClickListener?.onClick(word) }
+    }
+
+    class WordViewHolder(private val binding: ItemWordBinding) :
+        RecyclerView.ViewHolder(binding.root) {
+        fun bind(word: Word) {
+            binding.apply {
+                tvWord.text = word.text
+                tvMean.text = word.mean
+                chipWordType.text = word.type
+            }
         }
     }
 
-    class WordViewHolder(val binding: ItemWordBinding) : RecyclerView.ViewHolder(binding.root) {
-
+    interface ItemClickListener {
+        fun onClick(word: Word) {}
     }
 }

@@ -3,12 +3,14 @@ package org.bmsk.wordhaven
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Adapter
+import android.widget.Toast
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import org.bmsk.wordhaven.adapter.WordAdapter
 import org.bmsk.wordhaven.data.model.Word
 import org.bmsk.wordhaven.databinding.ActivityWordBookBinding
 
-class WordBookActivity : AppCompatActivity() {
+class WordBookActivity : AppCompatActivity(), WordAdapter.ItemClickListener {
     private lateinit var binding: ActivityWordBookBinding
     private lateinit var wordAdapter: WordAdapter
     private lateinit var dummyList: MutableList<Word>
@@ -32,10 +34,16 @@ class WordBookActivity : AppCompatActivity() {
     }
 
     private fun initView() {
-        wordAdapter = WordAdapter(dummyList)
+        wordAdapter = WordAdapter(dummyList, this)
         binding.rvWordList.apply {
             adapter = wordAdapter
             layoutManager = LinearLayoutManager(applicationContext, LinearLayoutManager.VERTICAL, false)
+            val dividerItemDecoration = DividerItemDecoration(applicationContext, LinearLayoutManager.VERTICAL)
+            addItemDecoration(dividerItemDecoration)
         }
+    }
+
+    override fun onClick(word: Word) {
+        Toast.makeText(this, "${word.text} 가 클릭 됐습니다", Toast.LENGTH_SHORT).show()
     }
 }
